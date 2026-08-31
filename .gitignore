@@ -1,0 +1,19 @@
+# Environment
+.env
+.env.local
+
+# Backend
+backend/target/
+backend/uploads/
+
+# Frontend
+frontend/.next/
+frontend/node_modules/
+frontend/out/
+
+# Local tool caches
+work/.m2/
+work/npm-cache/
+
+# Logs
+*.log
