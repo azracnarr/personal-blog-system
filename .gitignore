@@ -14,6 +14,8 @@ frontend/out/
 # Local tool caches
 work/.m2/
 work/npm-cache/
+work/github-sync/
+work/ssh/
 
 # Logs
 *.log
