@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr">
-      <body><header className="site-header"><Link className="brand" href="/">Kişisel Blog</Link><nav><Link href="/blog">Blog</Link><Link href="/about">Hakkımda</Link><Link href="/projects">Projeler</Link><Link href="/contact">İletişim</Link><Link href="/admin/login">Yönetim</Link></nav></header>{children}</body>
+      <body><header className="site-header"><Link className="brand" href="/">Kişisel Blog</Link><nav><Link href="/">Ana Sayfa</Link><Link href="/about">Hakkımda</Link><Link href="/blog">Blog</Link><Link href="/projects">Projeler</Link><Link href="/contact">İletişim</Link></nav></header>{children}</body>
     </html>
   );
 }
