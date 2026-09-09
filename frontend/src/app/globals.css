@@ -51,5 +51,6 @@ textarea { resize: vertical; }
 .skill-list span, .contact-detail { padding: 10px 14px; border: 1px solid #e2e5ef; background: #fff; border-radius: 999px; color: #596579; }
 .contact-detail { display: grid; gap: 5px; border-radius: 14px; margin-top: 30px; max-width: 250px; }
 .contact-detail strong { color: #18212f; }
+.admin-avatar-preview { width: 120px; height: 120px; object-fit: cover; border-radius: 18px; border: 1px solid #e2e5ef; }
 @media (max-width: 700px) { .site-header { align-items: flex-start; gap: 18px; flex-direction: column; } nav { flex-wrap: wrap; gap: 12px; } .shell { padding: 44px 0; } }
 @media (max-width: 700px) { .blog-grid, .about-layout, .contact-layout { grid-template-columns: 1fr; gap: 34px; } .featured-card { grid-row: auto; } }
