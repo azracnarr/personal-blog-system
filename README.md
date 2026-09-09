@@ -102,3 +102,52 @@ Notlar:
 - Maven local repository proje icindeki `work/.m2/repository` yolunu kullanir.
 - npm cache proje icindeki `work/npm-cache` yolunu kullanir.
 - Bu iki cache klasoru Git'e eklenmez.
+
+Kendi bilgilerinizi siteye eklemek için [CONTENT-GUIDE.md](CONTENT-GUIDE.md)
+dosyasındaki adımları izleyin. Bu belgede admin hesabı, hakkımda bilgisi,
+blog yazısı, proje, görsel ve iletişim mesajı akışları örneklerle anlatılır.
+
+## Checkpoint 2 - PostgreSQL ve blog temeli
+
+Bu checkpoint'te:
+
+- Backend'e Spring Data JPA ve PostgreSQL bagimliliklari eklendi.
+- Veritabani ayarlari `DB_URL`, `DB_USERNAME` ve `DB_PASSWORD` ortam degiskenlerinden okunacak sekilde yapilandirildi.
+- `Blog` entity'si `blogs` tablosunu temsil ediyor.
+- `BlogRepository`, blog verilerine erisim sagliyor.
+- `GET /api/blogs` blog listesini donduruyor.
+- `POST /api/blogs` yeni blog olusturuyor.
+
+Ornek istek govdesi:
+
+```json
+{
+  "title": "Ilk yazi",
+  "content": "Blog icerigi"
+}
+```
+
+Bu checkpoint'te tam CRUD tamamlanmadi; guncelleme ve silme sonraki adimda ele alinacak.
+
+## Checkpoint 3 - Blog guncelleme ve silme
+
+Blog API'sine su endpoint'ler eklendi:
+
+- `PUT /api/blogs/{id}` mevcut blogu gunceller.
+- `DELETE /api/blogs/{id}` blogu siler ve `204 No Content` dondurur.
+- Var olmayan bloglar icin `404 Not Found` dondurulur.
+
+`BlogService`, controller ile repository arasindaki is kurallarini tasir. Controller HTTP isteklerini alir; service kaydin bulunup bulunmadigini kontrol eder; repository veritabanina erisir.
+
+## Guncel calisan surum
+
+Ilk checkpoint'lere ek olarak proje artik kapsamda belirtilen minimal urun
+akislarini icerir: JWT HttpOnly cookie ile admin girisi, CSRF token kontrolu,
+blog CRUD, hakkimda/proje/iletisim API'leri, yerel gorsel yukleme ve Next.js
+public/admin sayfalari. Kurulum, dosya haritasi, endpoint tablosu ve guvenlik
+notlari icin [GUIDE.md](GUIDE.md) dosyasina bakin.
+
+Dogru ortami yukledikten sonra backend icin `mvnw.cmd test`, frontend icin
+`npm.cmd run build` komutlari kullanilir. Sifre, JWT secret ve veritabani
+bilgileri yalnizca ortam degiskenlerinden verilmeli; `.env.example` dosyalari
+sablon olarak kullanilmalidir.
