@@ -38,4 +38,18 @@ textarea { resize: vertical; }
 .stat { padding: 14px 18px; border-radius: 14px; background: #fff; border: 1px solid #e2e5ef; }
 .stat strong { display: block; font-size: 1.5rem; color: #6558f5; }
 .accent { color: #6558f5; }
+.page-intro { max-width: 680px; margin-bottom: 46px; }
+.blog-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.featured-card { grid-row: span 2; }
+.card-meta { display: flex; justify-content: space-between; color: #8a94a6; font-size: .8rem; margin-bottom: 18px; }
+.read-more { display: inline-block; margin-top: 18px; color: #6558f5; font-weight: 700; }
+.read-more span { font-size: 1.2rem; }
+.article-image { width: min(100%, 900px); max-height: 460px; object-fit: cover; border-radius: 22px; margin: 18px 0 30px; }
+.about-layout, .contact-layout { display: grid; grid-template-columns: .8fr 1.2fr; gap: 70px; align-items: start; }
+.profile-image { width: min(100%, 330px); aspect-ratio: 1; object-fit: cover; border-radius: 30px; box-shadow: 20px 20px 0 #dcd8ff; }
+.skill-list { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.skill-list span, .contact-detail { padding: 10px 14px; border: 1px solid #e2e5ef; background: #fff; border-radius: 999px; color: #596579; }
+.contact-detail { display: grid; gap: 5px; border-radius: 14px; margin-top: 30px; max-width: 250px; }
+.contact-detail strong { color: #18212f; }
 @media (max-width: 700px) { .site-header { align-items: flex-start; gap: 18px; flex-direction: column; } nav { flex-wrap: wrap; gap: 12px; } .shell { padding: 44px 0; } }
+@media (max-width: 700px) { .blog-grid, .about-layout, .contact-layout { grid-template-columns: 1fr; gap: 34px; } .featured-card { grid-row: auto; } }
