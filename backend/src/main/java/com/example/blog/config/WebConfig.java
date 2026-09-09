@@ -19,7 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/api/**")
                 .allowedOrigins(frontendUrl, "http://localhost:3000", "http://127.0.0.1:3000")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("Content-Type", "X-CSRF-TOKEN")
+                .allowedHeaders("Content-Type", "X-CSRF-TOKEN", "Accept")
                 .allowCredentials(true);
     }
 

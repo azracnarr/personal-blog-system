@@ -25,7 +25,20 @@ export default function AdminPage() {
   async function add(event: FormEvent<HTMLFormElement>) { event.preventDefault(); const form = event.currentTarget; const data = Object.fromEntries(new FormData(form)); try { const blog = await apiJson<Blog>("/api/blogs", { method: "POST", headers: { "X-CSRF-TOKEN": csrf() }, body: JSON.stringify({ ...data, published: true }) }); setBlogs([blog, ...blogs]); form.reset(); setStatus("Yazı kaydedildi."); } catch (error) { setStatus(`Kayıt başarısız: ${error instanceof Error ? error.message : "Sunucu hatası"}`); } }
   async function upload(file: File): Promise<string> {
     setUploading(true);
-    try { const data = new FormData(); data.append("file", file); const result = await apiJson<{ url: string }>("/api/uploads", { method: "POST", headers: { "X-CSRF-TOKEN": csrf() }, body: data }); return `${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080"}${result.url}`; }
+    try {
+      const data = new FormData();
+      data.append("file", file);
+      const result = await apiJson<{ url: string }>("/api/uploads", {
+        method: "POST",
+        headers: { "X-CSRF-TOKEN": csrf(), Accept: "application/json" },
+        body: data
+      });
+      return `${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080"}${result.url}`;
+    } catch (error) {
+      throw new Error(error instanceof TypeError
+        ? "Backend'e ulaşılamadı. Backend'in 8080 portunda çalıştığını ve sayfayı yenilediğinizi kontrol edin."
+        : error instanceof Error ? error.message : "Görsel yüklenemedi.");
+    }
     finally { setUploading(false); }
   }
   async function addWithImage(event: FormEvent<HTMLFormElement>) { event.preventDefault(); const form = event.currentTarget; const data = new FormData(form); const file = data.get("image"); let imageUrl = ""; try { if (file instanceof File && file.size) imageUrl = await upload(file); const blog = await apiJson<Blog>("/api/blogs", { method: "POST", headers: { "X-CSRF-TOKEN": csrf() }, body: JSON.stringify({ title: data.get("title"), content: data.get("content"), imageUrl, published: true }) }); setBlogs([blog, ...blogs]); form.reset(); setStatus("Yazı ve görsel kaydedildi."); } catch (error) { setStatus(`Kayıt başarısız: ${error instanceof Error ? error.message : "Sunucu hatası"}`); } }
