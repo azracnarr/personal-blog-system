@@ -53,5 +53,20 @@ textarea { resize: vertical; }
 .contact-detail { display: grid; gap: 5px; border-radius: 14px; margin-top: 30px; max-width: 250px; }
 .contact-detail strong { color: #18212f; }
 .admin-avatar-preview { width: 120px; height: 120px; object-fit: cover; border-radius: 18px; border: 1px solid #e2e5ef; }
+.inbox-section { margin-top: 70px; }
+.unread-count { color: #6558f5; font-size: .85rem; font-weight: 700; background: #eeecff; padding: 8px 12px; border-radius: 999px; }
+.message-list { display: grid; gap: 10px; }
+.message-card { background: #fff; border: 1px solid #e2e5ef; border-radius: 15px; overflow: hidden; box-shadow: 0 8px 24px #5965790d; }
+.message-card.is-unread { border-color: #b9b1ff; box-shadow: 0 8px 24px #6558f51c; }
+.message-summary { width: 100%; display: grid; grid-template-columns: 10px minmax(150px, .7fr) minmax(0, 1.5fr) 20px; gap: 14px; align-items: center; padding: 18px; border: 0; background: transparent; text-align: left; cursor: pointer; color: #18212f; }
+.message-dot { width: 8px; height: 8px; border-radius: 50%; background: #c9cedb; }
+.is-unread .message-dot { background: #6558f5; box-shadow: 0 0 0 4px #eeecff; }
+.message-heading { display: grid; gap: 4px; }
+.message-heading small, .message-preview, .message-actions span { color: #8a94a6; font-size: .85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.message-chevron { color: #6558f5; font-size: 1.3rem; }
+.message-detail { padding: 0 20px 20px 58px; border-top: 1px solid #eef0f5; }
+.message-detail p { white-space: pre-wrap; color: #455166; }
+.message-actions { display: flex; align-items: center; gap: 14px; }
+@media (max-width: 700px) { .message-summary { grid-template-columns: 10px 1fr 20px; } .message-preview { grid-column: 2 / 3; } .message-detail { padding-left: 20px; } }
 @media (max-width: 700px) { .site-header { align-items: flex-start; gap: 18px; flex-direction: column; } nav { flex-wrap: wrap; gap: 12px; } .shell { padding: 44px 0; } }
 @media (max-width: 700px) { .blog-grid, .about-layout, .contact-layout { grid-template-columns: 1fr; gap: 34px; } .featured-card { grid-row: auto; } }
