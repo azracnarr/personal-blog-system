@@ -54,6 +54,8 @@ textarea { resize: vertical; }
 .contact-detail { display: grid; gap: 5px; border-radius: 14px; margin-top: 30px; max-width: 250px; }
 .contact-detail strong { color: #18212f; }
 .admin-avatar-preview { width: 120px; height: 120px; object-fit: cover; border-radius: 18px; border: 1px solid #e2e5ef; }
+.admin-image-actions { display: flex; align-items: center; gap: 14px; }
+.admin-project-url { display: block; margin-top: 5px; color: #8a94a6; font-size: .8rem; }
 .inbox-section { margin-top: 70px; }
 .unread-count { color: #6558f5; font-size: .85rem; font-weight: 700; background: #eeecff; padding: 8px 12px; border-radius: 999px; }
 .message-list { display: grid; gap: 10px; }

@@ -38,4 +38,16 @@ public class ContactController {
         message.setReadMessage(true);
         return repository.save(message);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id, HttpServletRequest request) {
+        authService.requireAdmin(request);
+        authService.requireCsrf(request);
+        if (!repository.existsById(id)) {
+            throw new org.springframework.web.server.ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Mesaj bulunamadi");
+        }
+        repository.deleteById(id);
+    }
 }
