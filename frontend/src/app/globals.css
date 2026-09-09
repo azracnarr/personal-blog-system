@@ -49,6 +49,16 @@ textarea { resize: vertical; }
 .article-image { width: min(100%, 900px); max-height: 460px; object-fit: cover; border-radius: 22px; margin: 18px 0 30px; }
 .about-layout, .contact-layout { display: grid; grid-template-columns: .8fr 1.2fr; gap: 70px; align-items: start; }
 .profile-image { width: min(100%, 330px); aspect-ratio: 1; object-fit: cover; border-radius: 30px; box-shadow: 20px 20px 0 #dcd8ff; }
+.about-page { max-width: 920px; }
+.about-hero { text-align: center; padding: 10px 0 90px; }
+.about-hero h1 { margin-bottom: 12px; }
+.about-lead { max-width: 520px; margin: 0 auto 42px; font-size: 1.15rem; }
+.about-hero .profile-image { display: block; margin: 0 auto; width: min(100%, 300px); border-radius: 50%; box-shadow: 18px 18px 0 #dcd8ff, 0 20px 50px #6558f533; }
+.about-story, .about-skills { display: grid; grid-template-columns: .7fr 1.3fr; gap: 40px; padding: 48px 0; border-top: 1px solid #e2e5ef; }
+.story-heading { display: flex; gap: 14px; align-items: flex-start; }
+.story-heading h2 { margin: 0; }
+.story-number { color: #6558f5; font-size: .8rem; font-weight: 800; letter-spacing: .1em; }
+.about-skills .skill-list { margin-top: 0; }
 .skill-list { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
 .skill-list span, .contact-detail { padding: 10px 14px; border: 1px solid #e2e5ef; background: #fff; border-radius: 999px; color: #596579; }
 .contact-detail { display: grid; gap: 5px; border-radius: 14px; margin-top: 30px; max-width: 250px; }
@@ -72,4 +82,4 @@ textarea { resize: vertical; }
 .message-actions { display: flex; align-items: center; gap: 14px; }
 @media (max-width: 700px) { .message-summary { grid-template-columns: 10px 1fr 20px; } .message-preview { grid-column: 2 / 3; } .message-detail { padding-left: 20px; } }
 @media (max-width: 700px) { .site-header { align-items: flex-start; gap: 18px; flex-direction: column; } nav { flex-wrap: wrap; gap: 12px; } .shell { padding: 44px 0; } }
-@media (max-width: 700px) { .blog-grid, .about-layout, .contact-layout { grid-template-columns: 1fr; gap: 34px; } .featured-card { grid-row: auto; } }
+@media (max-width: 700px) { .blog-grid, .about-layout, .contact-layout, .about-story, .about-skills { grid-template-columns: 1fr; gap: 34px; } .featured-card { grid-row: auto; } }
