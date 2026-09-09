@@ -1,14 +1,16 @@
 "use client";
 import { FormEvent, useEffect, useState } from "react";
 import { apiFetch, apiJson } from "@/lib/api";
+import { useRouter } from "next/navigation";
 type Blog = { id: number; title: string; content: string; published: boolean; imageUrl?: string };
 type Project = { id: number; name: string; description: string; url?: string; imageUrl?: string };
 type About = { name: string; bio: string; avatarUrl?: string };
 type Message = { id: number; name: string; email: string; message: string; readMessage: boolean };
 export default function AdminPage() {
+  const router = useRouter();
   const [blogs, setBlogs] = useState<Blog[]>([]); const [projects, setProjects] = useState<Project[]>([]);
   const [messages, setMessages] = useState<Message[]>([]); const [about, setAbout] = useState<About>({ name: "", bio: "" }); const [status, setStatus] = useState(""); const [openMessage, setOpenMessage] = useState<number | null>(null);
-  const [uploading, setUploading] = useState(false);
+  const [uploading, setUploading] = useState(false); const [checkingAuth, setCheckingAuth] = useState(true);
   const csrf = () => {
     const cookieToken = document.cookie
       .split("; ")
@@ -17,11 +19,20 @@ export default function AdminPage() {
     return cookieToken || sessionStorage.getItem("csrfToken") || "";
   };
   useEffect(() => {
-    apiJson<Blog[]>("/api/blogs").then(setBlogs).catch(() => setStatus("Oturum açmanız gerekiyor."));
-    apiJson<Project[]>("/api/admin/projects").then(setProjects).catch(() => {});
-    apiJson<About>("/api/about").then(setAbout).catch(() => {});
-    apiJson<Message[]>("/api/contact").then(setMessages).catch(() => {});
-  }, []);
+    let active = true;
+    apiJson<{ authenticated: boolean }>("/api/auth/me").then(({ authenticated }) => {
+      if (!active) return;
+      if (!authenticated) { router.replace("/admin/login"); return; }
+      setCheckingAuth(false);
+      return Promise.all([
+        apiJson<Blog[]>("/api/blogs/admin").then(setBlogs),
+        apiJson<Project[]>("/api/admin/projects").then(setProjects),
+        apiJson<About>("/api/about").then(setAbout),
+        apiJson<Message[]>("/api/contact").then(setMessages)
+      ]).catch(() => setStatus("Yönetim verileri yüklenemedi."));
+    }).catch(() => { if (active) router.replace("/admin/login"); });
+    return () => { active = false; };
+  }, [router]);
   async function add(event: FormEvent<HTMLFormElement>) { event.preventDefault(); const form = event.currentTarget; const data = Object.fromEntries(new FormData(form)); try { const blog = await apiJson<Blog>("/api/blogs", { method: "POST", headers: { "X-CSRF-TOKEN": csrf() }, body: JSON.stringify({ ...data, published: true }) }); setBlogs([blog, ...blogs]); form.reset(); setStatus("Yazı kaydedildi."); } catch (error) { setStatus(`Kayıt başarısız: ${error instanceof Error ? error.message : "Sunucu hatası"}`); } }
   async function upload(file: File): Promise<string> {
     setUploading(true);
@@ -60,6 +71,7 @@ export default function AdminPage() {
       }
     }
   }
+  if (checkingAuth) return <main className="shell narrow"><p className="eyebrow">Yönetim paneli</p><h1>Oturum kontrol ediliyor...</h1></main>;
   return <main className="shell"><p className="eyebrow">Yönetim paneli</p><h1>İçerik yönetimi</h1>{status && <p className="notice">{status}</p>}
     <section><h2>Yeni yazı</h2><form className="form admin-form" onSubmit={addWithImage}><input name="title" placeholder="Başlık" required /><textarea name="content" placeholder="İçerik" rows={5} required /><label>Kapak görseli<input type="file" name="image" accept="image/png,image/jpeg,image/webp,image/gif" /></label><button className="button" disabled={uploading}>{uploading ? "Yükleniyor..." : "Yayınla"}</button></form><div className="admin-list">{blogs.map(blog => <div key={blog.id}><strong>{blog.title}</strong><button onClick={() => remove(blog.id)} className="link-button">Sil</button></div>)}</div></section>
     <section><h2>Hakkımda</h2><form className="form admin-form" onSubmit={saveAbout}><input name="name" value={about.name} onChange={e => setAbout({ ...about, name: e.target.value })} required /><textarea name="bio" value={about.bio} onChange={e => setAbout({ ...about, bio: e.target.value })} rows={4} required /><label>Profil fotoğrafı<input type="file" name="avatar" accept="image/png,image/jpeg,image/webp,image/gif" /></label>{about.avatarUrl && <div className="admin-image-actions"><img className="admin-avatar-preview" src={about.avatarUrl} alt="Mevcut profil fotoğrafı" /><button type="button" className="link-button" onClick={clearAboutImage}>Fotoğrafı kaldır</button></div>}<button className="button" disabled={uploading}>{uploading ? "Yükleniyor..." : "Kaydet"}</button></form></section>

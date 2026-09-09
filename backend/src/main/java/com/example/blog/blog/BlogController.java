@@ -31,6 +31,12 @@ public class BlogController {
         return blogService.listPublishedBlogs();
     }
 
+    @GetMapping("/admin")
+    public List<Blog> listAllBlogs(HttpServletRequest request) {
+        authService.requireAdmin(request);
+        return blogService.listBlogs();
+    }
+
     @GetMapping("/{id}")
     public Blog getBlog(@PathVariable Long id) {
         return blogService.getBlog(id);
