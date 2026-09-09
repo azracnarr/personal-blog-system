@@ -34,6 +34,7 @@ textarea { resize: vertical; }
 .admin-list { display: grid; gap: 8px; margin-top: 32px; max-width: 700px; }
 .admin-list > div { background: white; border: 1px solid #e2e5ef; border-radius: 10px; padding: 15px; display: flex; justify-content: space-between; }
 .link-button { border: 0; background: transparent; color: #b42318; cursor: pointer; }
+.reply-button { flex: 0 0 auto; padding: 9px 14px; font-size: .85rem; }
 .stats { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 38px; }
 .stat { padding: 14px 18px; border-radius: 14px; background: #fff; border: 1px solid #e2e5ef; }
 .stat strong { display: block; font-size: 1.5rem; color: #6558f5; }
